@@ -2,7 +2,7 @@
 
 #define PROCESSOR
 
-#include "../log.hpp"
+#include "../plogger/log.hpp"
 #include "colorFuncs.hpp"
 
 #define processorFunc Log(*)(Log)

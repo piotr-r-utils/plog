@@ -2,8 +2,8 @@
 
 #define EXPORTER
 
-#include "log.hpp"
-#include "processor/processor.hpp"
+#include "../plogger/log.hpp"
+#include "../processor/processor.hpp"
 
 #include <fstream>
 #include <iostream>
