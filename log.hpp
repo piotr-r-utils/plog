@@ -11,7 +11,7 @@ struct attrib {
     std::string val;
 };
 
-enum Importance{ALL, INFO, ERROR};
+enum Importance{ALL, INFO, ERROR, FATAL};
 
 struct Log {
     std::string index;
@@ -24,6 +24,8 @@ struct Log {
 
     
     void withAttribs(std::vector<attrib> attribs);
+
+    std::string errorStr;
 };
 
 #endif

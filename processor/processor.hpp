@@ -2,7 +2,8 @@
 
 #define PROCESSOR
 
-#include "log.hpp"
+#include "../log.hpp"
+#include "colorFuncs.hpp"
 
 #define processorFunc Log(*)(Log)
 #define parserFunc std::string(*)(Log)
@@ -17,11 +18,19 @@ public:
     Processor withProcessorFunc(Log(*f)(Log));
     Processor withParserFunc(std::string(*f)(Log));
 
-
     Processor();
 };
 
 Processor newProcessor();
+
+//////////////////////GENERIC
+std::string genericParseFunc(Log log);
+
+//////////////////////FOR CONSOLE EXPORTER
+Log color(Log log);
+
+//////////////////////FOR FILE EXPORTER
+
 
 
 #endif

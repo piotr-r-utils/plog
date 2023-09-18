@@ -18,4 +18,3 @@ Exporter Exporter::withProcessor(Processor p){
     processor = p;
     return *this;
 }
-

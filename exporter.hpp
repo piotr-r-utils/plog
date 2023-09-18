@@ -3,10 +3,11 @@
 #define EXPORTER
 
 #include "log.hpp"
-#include "processor.hpp"
+#include "processor/processor.hpp"
 
 #include <fstream>
 #include <iostream>
+#include <string>
 
 class Exporter{
     Processor processor;
@@ -19,17 +20,24 @@ public:
 
 Exporter newExporter();
 
-
-
 class ConsoleExporter : public Exporter{
 public:
-    Exporter withNewConsole(std::string childConsolePath);
+    ConsoleExporter withNewConsole(std::string childConsolePath);
 };
 
+ConsoleExporter newConsoleExporter();
+
+Exporter defaultConsoleExporter();
+Exporter colorfullConsoleExporter();
+
 class FileExporter : public Exporter{
-    std::fstream filestream;
+    std::string filePath;
 public:
-    Exporter withEndFile(std::string filePath);
+    FileExporter withFile(std::string filePath);
 };
+
+FileExporter newFileExporter();
+
+Exporter defaultFileExporter();
 
 #endif

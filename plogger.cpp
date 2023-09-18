@@ -4,16 +4,6 @@
 #include <stdio.h>
 #include <time.h>
 
-std::string currentDateTime() {
-    time_t     now = time(0);
-    struct tm  tstruct;
-    char       buf[80];
-    tstruct = *localtime(&now);
-    strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
-
-    return buf;
-}
-
 Plogger::Plogger(){
     exporter = new Exporter();
     index = "defaultIndex";
@@ -24,36 +14,49 @@ Plogger newPlogger(){
     return Plogger();
 }
 
+Plogger newPloggerConsole(){
+    return newPlogger()
+        .withExporter(
+            newConsoleExporter()
+            .withProcessor(
+                newProcessor()
+                .withParserFunc(genericParseFunc)
+            )
+        );
+}
+
+Plogger newPloggerConsoleColor(){
+    return newPlogger()
+        .withExporter(
+            newConsoleExporter()
+            .withProcessor(
+                newProcessor()
+                .withParserFunc(genericParseFunc)
+                .withProcessorFunc(color)
+            )
+        );
+}
+
 Plogger Plogger::withImportance(Importance i){
-    importance = i;
+    this->importance = i;
     return *this;
 }
 
 Plogger Plogger::withIndex(std::string index){
-    index = index;
+    this->index = index;
     return *this;
 }
 
 Plogger Plogger::withExporter(Exporter exp){
-    exporter = new Exporter();
-    *exporter = exp;
+    this->exporter = new Exporter();
+    *this->exporter = exp;
     return *this;
 }
 
-
-
-void Plogger::log(std::string message){
-    if(ALL < importance){
-        return;
-    }
-    
-    std::string timestamp = currentDateTime();
-    Log log{index, timestamp, message, nullptr, ALL};
-    exporter->exportLog(log);
+Plogger Plogger::withConsoleExporter(Exporter exp){
+    return this->withExporter(exp);
 }
 
-void Plogger::logInfo(std::string){}
-void Plogger::logError(std::string, std::runtime_error){}
-void Plogger::logError(std::string){}
-void Plogger::fatal(std::string, std::runtime_error){}
-void Plogger::fatal(std::string){}
+Plogger Plogger::withFileExporter(Exporter exp){
+    return this->withExporter(exp);
+}
